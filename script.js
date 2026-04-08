@@ -2,28 +2,36 @@ const contactModal = document.getElementById("contactModal");
 const contactClose = document.getElementById("contactClose");
 const openContactBtn = document.getElementById("openContact");
 
-openContactBtn.addEventListener("click", (e) => {
-  e.preventDefault(); // 阻止跳链接
-  openContactModal();
-});
+if (openContactBtn) {
+  openContactBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    openContactModal();
+  });
+}
 
 function openContactModal() {
+  if (!contactModal) return;
   contactModal.classList.add("active");
   document.body.classList.add("modal-open");
 }
 
 function closeContactModal() {
+  if (!contactModal) return;
   contactModal.classList.remove("active");
   document.body.classList.remove("modal-open");
 }
 
-contactClose.addEventListener("click", closeContactModal);
+if (contactClose) {
+  contactClose.addEventListener("click", closeContactModal);
+}
 
-contactModal.addEventListener("click", (e) => {
-  if (e.target.classList.contains("contact-modal-overlay")) {
-    closeContactModal();
-  }
-});
+if (contactModal) {
+  contactModal.addEventListener("click", (e) => {
+    if (e.target.classList.contains("contact-modal-overlay")) {
+      closeContactModal();
+    }
+  });
+}
 
 function handleHeader() {
   const header = document.querySelector(".header");
@@ -76,6 +84,7 @@ window.addEventListener("resize", handleScrollEffects);
 const modal = document.getElementById("projectModal");
 const modalClose = document.getElementById("modalClose");
 const modalImage = document.getElementById("modalImage");
+const modalPageIndicator = document.getElementById("modalPageIndicator");
 
 const modalKicker = document.getElementById("modalKicker");
 const modalTitle = document.getElementById("modalTitle");
@@ -87,8 +96,6 @@ const modalDescription = document.getElementById("modalDescription");
 
 const prevImageBtn = document.getElementById("prevImage");
 const nextImageBtn = document.getElementById("nextImage");
-const modalThumbnails = document.getElementById("modalThumbnails");
-
 const projectTriggers = document.querySelectorAll("[data-project]");
 
 const projectData = {
@@ -115,8 +122,6 @@ const projectData = {
       "images/pw10.jpg",
       "images/pw11.jpg",
       "images/pw13.jpg"
-
-
     ]
   },
 
@@ -156,13 +161,47 @@ const projectData = {
       "images/fish5.jpg",
       "images/fish6.jpg",
       "images/fish7.jpg"
-
     ]
   }
 };
 
 let currentProjectKey = null;
 let currentImageIndex = 0;
+
+function applyImageOrientation() {
+  if (!modalImage) return;
+
+  modalImage.classList.remove("portrait", "landscape");
+
+  const ratio = modalImage.naturalWidth / modalImage.naturalHeight;
+
+  if (ratio < 0.9) {
+    modalImage.classList.add("portrait");
+  } else {
+    modalImage.classList.add("landscape");
+  }
+}
+
+function updatePageIndicator(totalImages) {
+  if (!modalPageIndicator) return;
+  modalPageIndicator.textContent = `${currentImageIndex + 1} / ${totalImages}`;
+}
+
+function updateModalImage(images) {
+  if (!modalImage || !images || !images.length) return;
+
+  modalImage.classList.add("fade-out");
+
+  setTimeout(() => {
+    modalImage.onload = () => {
+      applyImageOrientation();
+      modalImage.classList.remove("fade-out");
+    };
+
+    modalImage.src = images[currentImageIndex];
+    updatePageIndicator(images.length);
+  }, 180);
+}
 
 function updateModalContent(projectKey) {
   const data = projectData[projectKey];
@@ -176,55 +215,7 @@ function updateModalContent(projectKey) {
   modalTools.textContent = data.tools;
   modalDescription.textContent = data.description;
 
-  modalImage.onload = applyImageOrientation;
-  modalImage.src = data.images[currentImageIndex];
-
-  renderThumbnails(data.images);
-}
-
-function applyImageOrientation() {
-  modalImage.classList.remove("portrait", "landscape");
-
-  const ratio = modalImage.naturalWidth / modalImage.naturalHeight;
-
-  if (ratio < 0.9) {
-    modalImage.classList.add("portrait");
-  } else {
-    modalImage.classList.add("landscape");
-  }
-}
-
-function renderThumbnails(images) {
-  modalThumbnails.innerHTML = "";
-
-  images.forEach((imgSrc, index) => {
-    const thumb = document.createElement("button");
-    thumb.className = "modal-thumbnail";
-
-    if (index === currentImageIndex) {
-      thumb.classList.add("active");
-    }
-
-    thumb.innerHTML = `<img src="${imgSrc}" alt="Thumbnail ${index + 1}">`;
-
-thumb.addEventListener("click", () => {
-  modalImage.classList.add("fade-out");
-
-  setTimeout(() => {
-    currentImageIndex = index;
-
-    modalImage.onload = () => {
-      applyImageOrientation();
-      modalImage.classList.remove("fade-out");
-    };
-
-    modalImage.src = images[currentImageIndex];
-    renderThumbnails(images);
-  }, 180);
-});
-
-    modalThumbnails.appendChild(thumb);
-  });
+  updateModalImage(data.images);
 }
 
 function openModal(projectKey) {
@@ -233,63 +224,72 @@ function openModal(projectKey) {
 
   updateModalContent(projectKey);
 
-  modal.classList.add("active");
-  document.body.classList.add("modal-open");
+  if (modal) {
+    modal.classList.add("active");
+    document.body.classList.add("modal-open");
+  }
 }
 
 function closeModal() {
-  modal.classList.remove("active");
-  document.body.classList.remove("modal-open");
+  if (modal) {
+    modal.classList.remove("active");
+    document.body.classList.remove("modal-open");
+  }
 }
 
 function changeImage(direction) {
   const data = projectData[currentProjectKey];
-  if (!data) return;
+  if (!data || !data.images.length) return;
 
-  modalImage.classList.add("fade-out");
+  currentImageIndex =
+    (currentImageIndex + direction + data.images.length) % data.images.length;
 
-  setTimeout(() => {
-    currentImageIndex =
-      (currentImageIndex + direction + data.images.length) % data.images.length;
-
-    modalImage.onload = () => {
-      applyImageOrientation();
-      modalImage.classList.remove("fade-out");
-    };
-
-    modalImage.src = data.images[currentImageIndex];
-    renderThumbnails(data.images);
-  }, 180);
+  updateModalImage(data.images);
 }
 
-projectTriggers.forEach(trigger => {
-  trigger.addEventListener("click", e => {
+projectTriggers.forEach((trigger) => {
+  trigger.addEventListener("click", (e) => {
     e.preventDefault();
     const key = trigger.dataset.project;
     openModal(key);
   });
 });
 
-modalClose.addEventListener("click", closeModal);
+if (modalClose) {
+  modalClose.addEventListener("click", closeModal);
+}
 
-prevImageBtn.addEventListener("click", () => {
-  changeImage(-1);
-});
+if (prevImageBtn) {
+  prevImageBtn.addEventListener("click", () => {
+    changeImage(-1);
+  });
+}
 
-nextImageBtn.addEventListener("click", () => {
-  changeImage(1);
-});
+if (nextImageBtn) {
+  nextImageBtn.addEventListener("click", () => {
+    changeImage(1);
+  });
+}
 
-modal.addEventListener("click", e => {
-  if (e.target === modal) {
-    closeModal();
+if (modal) {
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+}
+
+window.addEventListener("keydown", (e) => {
+  const isProjectModalOpen = modal && modal.classList.contains("active");
+  const isContactModalOpen = contactModal && contactModal.classList.contains("active");
+
+  if (e.key === "Escape") {
+    if (isProjectModalOpen) closeModal();
+    if (isContactModalOpen) closeContactModal();
   }
-});
 
-window.addEventListener("keydown", e => {
-  if (!modal.classList.contains("active")) return;
+  if (!isProjectModalOpen) return;
 
-  if (e.key === "Escape") closeModal();
   if (e.key === "ArrowLeft") changeImage(-1);
   if (e.key === "ArrowRight") changeImage(1);
 });
