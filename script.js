@@ -109,19 +109,19 @@ const projectData = {
     description:
       "HappyPaws is a pet adoption and shopping platform that integrates Pet Guides, Adoption, Community, and Shop. It connects to a backend database to enable features such as registration, login, adding to a shopping cart, and adding favorite pets. The project aims to create a warm, convenient, and user-friendly experience for pet lovers.",
     images: [
-      "images/project-main.jpg",
-      "images/pw1.jpg",
-      "images/pw2.jpg",
-      "images/pw3.jpg",
-      "images/pw4.jpg",
-      "images/pw5.jpg",
-      "images/pw7.jpg",
-      "images/pw6.jpg",
-      "images/pw8.jpg",
-      "images/pw9.jpg",
-      "images/pw10.jpg",
-      "images/pw11.jpg",
-      "images/pw13.jpg"
+      "images/project-main.webp",
+      "images/pw1.webp",
+      "images/pw2.webp",
+      "images/pw3.webp",
+      "images/pw4.webp",
+      "images/pw5.webp",
+      "images/pw7.webp",
+      "images/pw6.webp",
+      "images/pw8.webp",
+      "images/pw9.webp",
+      "images/pw10.webp",
+      "images/pw11.webp",
+      "images/pw13.webp"
     ]
   },
 
@@ -135,12 +135,12 @@ const projectData = {
     description:
       "The Wolf Is Coming is a farm management strategy board game centered on resource allocation, defense, and survival gameplay. The project involved concept development, rule system design, visual direction, and gameplay balancing to create an engaging tabletop experience.",
     images: [
-      "images/project1.jpg",
-      "images/wolf1.jpg",
-      "images/wolf2.jpg",
-      "images/wolf3.jpg",
-      "images/wolf4.jpg",
-      "images/wolf5.jpg"
+      "images/project1.webp",
+      "images/wolf1.webp",
+      "images/wolf2.webp",
+      "images/wolf3.webp",
+      "images/wolf4.webp",
+      "images/wolf5.webp"
     ]
   },
 
@@ -154,13 +154,13 @@ const projectData = {
     description:
       "FishGuard Star is an intelligent aquaculture monitoring system designed to improve fish farming management through AI-supported detection and visualized monitoring. The project explores how data, interface design, and system thinking can support a smarter aquatic farming workflow.",
     images: [
-      "images/fish1.jpg",
-      "images/fish2.jpg",
-      "images/fish3.jpg",
-      "images/fish4.jpg",
-      "images/fish5.jpg",
-      "images/fish6.jpg",
-      "images/fish7.jpg"
+      "images/fish1.webp",
+      "images/fish2.webp",
+      "images/fish3.webp",
+      "images/fish4.webp",
+      "images/fish5.webp",
+      "images/fish6.webp",
+      "images/fish7.webp"
     ]
   }
 };

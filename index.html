@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>My Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,7 +71,7 @@
       <!-- Big featured project -->
       <a href="#" class="featured-project reveal delay-2" data-project="happypaws">
         <div class="featured-image-wrap">
-          <img src="images/project-main.jpg" alt="Featured Project">
+          <img src="images/project-main.webp" alt="Featured Project" loading="lazy">
           <span class="project-arrow">↗</span>
         </div>
 
@@ -87,7 +88,7 @@
       <div class="project-grid">
         <a href="#" class="project-card reveal delay-3" data-project="wolf">
           <div class="project-image-wrap">
-            <img src="images/project1.jpg" alt="Project 1">
+            <img src="images/project1.webp" alt="Project 1" loading="lazy">
             <span class="project-arrow">↗</span>
           </div>
           <div class="project-info">
@@ -101,7 +102,7 @@
 
         <a href="#" class="project-card reveal delay-4" data-project="fishguard">
           <div class="project-image-wrap">
-            <img src="images/project2.jpg" alt="Project 2">
+            <img src="images/project2.webp" alt="Project 2" loading="lazy">
             <span class="project-arrow">↗</span>
           </div>
           <div class="project-info">
@@ -228,7 +229,7 @@
 
       <div class="about-right">
         <div class="about-image-card reveal-up delay-4">
-          <img src="images/about.jpg" alt="Portrait">
+          <img src="images/about.webp" alt="Portrait" loading="lazy">
 
           <div class="availability-card reveal-up delay-6">
             <p class="availability-title">AVAILABLE FOR PROJECTS</p>
@@ -304,7 +305,7 @@
           <div class="modal-page-indicator" id="modalPageIndicator">1 / 1</div>
           <button class="modal-nav prev" id="prevImage">←</button>
 
-          <img id="modalImage" src="" alt="Project Image">
+          <img id="modalImage" src="" alt="Project Image" decoding="async">
 
           <button class="modal-nav next" id="nextImage">→</button>
         </div>
